@@ -28,17 +28,18 @@
 
     <developers>
         <developer>
-            <name>Kim Christian Gaarder</name>
-            <email>kim.christian.gaarder@gmail.com</email>
-            <url>https://www.linkedin.com/in/kimchristiangaarder/</url>
-        </developer>
-
-        <developer>
             <name>Ove Ranheim</name>
             <email>ove.ranheim@gmail.com</email>
             <url>https://www.linkedin.com/in/overanheim/</url>
         </developer>
     </developers>
+
+    <contributors>
+        <contributor>
+            <name>Kim Christian Gaarder</name>
+            <url>https://www.linkedin.com/in/kimchristiangaarder/</url>
+        </contributor>
+    </contributors>
 
     <scm>
         <connection>scm:git:git://github.com/descoped/service-provider-api.git</connection>
