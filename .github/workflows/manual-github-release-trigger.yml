@@ -62,10 +62,10 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
         run: |
           mvn --batch-mode release:clean release:prepare release:perform \
-            -Darguments="-DskipTests -Dgpg.passphrase=${GPG_PASSPHRASE}" \
+            -Darguments="-DskipTests" \
             -DskipTests \
             -P oss-maven-central
 
