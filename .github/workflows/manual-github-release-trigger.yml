@@ -54,12 +54,33 @@ jobs:
           git config user.email "oranheim@gmail.com"
           git config user.name "GitHub Actions"
 
+      - name: Configure GPG
+        run: |
+          mkdir -p ~/.gnupg
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "batch" >> ~/.gnupg/gpg.conf
+          echo "no-tty" >> ~/.gnupg/gpg.conf
+          gpg-connect-agent reloadagent /bye
+          echo "GPG configuration completed"
+
       - name: Import GPG key
         env:
           GPG_SECRET: ${{ secrets.GPG_SECRET }}
         run: |
           echo "$GPG_SECRET" | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
+          echo "GPG key imported successfully"
+
+      - name: Debug GPG
+        run: |
+          gpg --version
+          gpg-agent --version
+          echo "GNUPGHOME=$GNUPGHOME"
+          ls -la ~/.gnupg
+          cat ~/.gnupg/gpg.conf
+          cat ~/.gnupg/gpg-agent.conf
 
       - name: Release with Maven
         env:
@@ -69,8 +90,7 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
         run: |
           mvn -X --batch-mode release:clean release:prepare release:perform \
-            -Dgpg.passphrase=${GPG_PASSPHRASE} \
-            -Dgpg.keyname=${GPG_KEY_ID} \
+            -Darguments="-Dgpg.passphrase=${GPG_PASSPHRASE} -Dgpg.keyname=${GPG_KEY_ID} -Dgpg.pinentry-mode=loopback" \
             -DskipTests \
             -P oss-maven-central
 
