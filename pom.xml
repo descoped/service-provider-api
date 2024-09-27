@@ -16,7 +16,6 @@
     <properties>
         <java.version>11</java.version>
         <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
-        <sonar.projectKey>descoped_service-provider-api</sonar.projectKey>
 
         <slf4j.version>2.0.16</slf4j.version>
     </properties>
@@ -144,17 +143,30 @@
         <profile>
             <id>coverage</id>
             <properties>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+                <sonar.organization>descoped</sonar.organization>
+                <sonar.projectKey>descoped_service-provider-api</sonar.projectKey>
+                <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
+                <!-- sonar.coverage.exclusions>**/model/*.java,**/config/*.java</sonar.coverage.exclusions -->
                 <sonar.coverage.jacoco.xmlReportPaths>
                     target/site/jacoco/jacoco.xml
                 </sonar.coverage.jacoco.xmlReportPaths>
-                <!-- sonar.coverage.exclusions>**/model/*.java,**/config/*.java</sonar.coverage.exclusions -->
             </properties>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.sonarsource.scanner.maven</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
-                        <version>4.0.0.4121</version>
+                        <version>3.11.0.3922</version>
+                        <executions>
+                            <execution>
+                                <id>sonar</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sonar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                     <plugin>
