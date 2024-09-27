@@ -54,18 +54,26 @@ jobs:
           git config user.email "oranheim@gmail.com"
           git config user.name "GitHub Actions"
 
-      - name: Import GPG key
+      - name: Import and Verify GPG key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          GPG_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
         run: |
-          echo "${{ secrets.OSSRH_GPG_PRIVATE_KEY }}" | gpg --batch --import
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+          echo "Verifying GPG passphrase..."
+          echo "test" | gpg --batch --yes --passphrase "$GPG_PASSPHRASE" --local-user "$GPG_KEY_ID" --armor --detach-sign --pinentry-mode loopback
 
       - name: Release with Maven
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          GPG_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
         run: |
           mvn -X --batch-mode release:clean release:prepare release:perform \
-            -Darguments="-Dgpg.passphrase=${GPG_PASSPHRASE} -Dgpg.keyname=${{ secrets.OSSRH_GPG_SECRET_KEY_ID }} -DskipTests" \
+            -Darguments="-Dgpg.passphrase=${GPG_PASSPHRASE} -Dgpg.keyname=${GPG_KEY_ID} -DskipTests" \
             -DskipTests \
             -P oss-maven-central
 
