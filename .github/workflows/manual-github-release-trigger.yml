@@ -56,17 +56,16 @@ jobs:
 
       - name: Import GPG key
         run: |
-          echo "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode | gpg --import --batch
+          echo "${{ secrets.OSSRH_GPG_PRIVATE_KEY }}" | gpg --batch --import
 
       - name: Release with Maven
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          OSSRH_GPG_SECRET_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
-          OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
         run: |
           mvn --batch-mode release:clean release:prepare release:perform \
-            -Darguments="-DskipTests -Dgpg.keyname=${OSSRH_GPG_SECRET_KEY_ID} -Dgpg.passphrase=${OSSRH_GPG_SECRET_KEY_PASSWORD}" \
+            -Darguments="-DskipTests -Dgpg.passphrase=${GPG_PASSPHRASE}" \
             -DskipTests \
             -P oss-maven-central
 
