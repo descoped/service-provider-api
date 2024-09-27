@@ -37,24 +37,21 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Prepare Maven settings.xml
+        run: |
+          cat "${{ github.workspace }}/.github/settings.xml" > ~/.m2/settings.xml         
+
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
-
-      - name: Import GPG key
-        run: |
-          echo "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode | gpg --import --batch
 
       - name: Publish Snapshot to OSS SonaType
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          OSSRH_GPG_SECRET_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
-          OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
         run: |
           mvn --batch-mode --no-transfer-progress deploy \
             -DskipTests \
-            -Dgpg.keyname=${OSSRH_GPG_SECRET_KEY_ID} \
-            -Dgpg.passphrase=${OSSRH_GPG_SECRET_KEY_PASSWORD}
+            -P oss-sonatype
 
       - name: Notify on success
         if: success()
