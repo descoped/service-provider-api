@@ -1,4 +1,4 @@
-package no.ssb.service.provider.api;
+package io.descoped.service.provider.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

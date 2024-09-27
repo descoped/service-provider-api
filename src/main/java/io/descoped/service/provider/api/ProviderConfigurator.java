@@ -1,4 +1,4 @@
-package no.ssb.service.provider.api;
+package io.descoped.service.provider.api;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;

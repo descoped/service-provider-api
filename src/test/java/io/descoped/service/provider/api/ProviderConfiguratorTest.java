@@ -1,4 +1,4 @@
-package no.ssb.service.provider.api;
+package io.descoped.service.provider.api;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
