@@ -29,4 +29,8 @@ jobs:
           cat "${{ github.workspace }}/.github/settings.xml" > ~/.m2/settings.xml
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USER }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        run: |
+          mvn --batch-mode --update-snapshots verify
