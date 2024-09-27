@@ -33,6 +33,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Prepare Maven settings.xml
+        run: |
+          cat "${{ github.workspace }}/.github/settings.xml" > ~/.m2/settings.xml
+
       - name: Get Maven Project Version
         run: |
           echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
@@ -64,7 +68,7 @@ jobs:
           mvn --batch-mode release:clean release:prepare release:perform \
             -Darguments="-DskipTests -Dgpg.keyname=${OSSRH_GPG_SECRET_KEY_ID} -Dgpg.passphrase=${OSSRH_GPG_SECRET_KEY_PASSWORD}" \
             -DskipTests \
-            -P oss-sonatype
+            -P oss-maven-central
 
       - name: Notify on success
         if: success()
