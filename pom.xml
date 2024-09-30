@@ -15,7 +15,8 @@
 
     <properties>
         <java.version>11</java.version>
-        <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <slf4j.version>2.0.16</slf4j.version>
     </properties>
@@ -248,7 +249,7 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>${java.version}</release>
-                    <encoding>${module.build.sourceEncoding}</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <meminitial>64m</meminitial>
                     <maxmem>512m</maxmem>
                 </configuration>
@@ -259,7 +260,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.1</version>
                 <configuration>
-                    <encoding>${module.build.sourceEncoding}</encoding>
+                    <encoding>${project.reporting.outputEncoding}</encoding>
                 </configuration>
             </plugin>
 
