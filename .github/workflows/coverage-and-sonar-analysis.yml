@@ -37,7 +37,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
         run: |
           mvn --batch-mode --no-transfer-progress clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -P coverage \
+            -P coverage,sonar \
             -Dsonar.projectKey=descoped_service-provider-api \
             -Dsonar.organization=descoped \
             -Dsonar.host.url=https://sonarcloud.io \
