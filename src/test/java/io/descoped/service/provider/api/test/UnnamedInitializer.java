@@ -1,4 +1,7 @@
-package io.descoped.service.provider.api;
+package io.descoped.service.provider.api.test;
+
+import io.descoped.service.provider.api.ProviderInitializer;
+import io.descoped.service.provider.api.ProviderName;
 
 /** Test service with a provider that has no @ProviderName. */
 public interface UnnamedInitializer extends ProviderInitializer<String> {

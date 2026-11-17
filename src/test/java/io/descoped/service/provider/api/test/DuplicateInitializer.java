@@ -1,4 +1,7 @@
-package io.descoped.service.provider.api;
+package io.descoped.service.provider.api.test;
+
+import io.descoped.service.provider.api.ProviderInitializer;
+import io.descoped.service.provider.api.ProviderName;
 
 /** Test service whose two providers share a name. */
 public interface DuplicateInitializer extends ProviderInitializer<String> {

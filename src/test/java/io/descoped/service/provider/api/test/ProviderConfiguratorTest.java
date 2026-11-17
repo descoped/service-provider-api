@@ -1,5 +1,7 @@
-package io.descoped.service.provider.api;
+package io.descoped.service.provider.api.test;
 
+import io.descoped.service.provider.api.ProviderConfigurator;
+import io.descoped.service.provider.api.ProviderException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

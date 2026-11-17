@@ -232,11 +232,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.6.1</version>
-                <configuration>
-                    <!-- The tests register their providers in META-INF/services, which only the class path reads. The
-                         module path, with provides in module-info, is tested by src/it/consumer/run.sh. -->
-                    <useModulePath>false</useModulePath>
-                </configuration>
             </plugin>
 
             <plugin>

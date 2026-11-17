@@ -1,4 +1,6 @@
-package io.descoped.service.provider.api;
+package io.descoped.service.provider.api.test;
+
+import io.descoped.service.provider.api.ProviderName;
 
 import java.util.Map;
 import java.util.Set;
