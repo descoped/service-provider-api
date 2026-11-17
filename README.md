@@ -2,7 +2,7 @@
 
 ![Build Status](https://img.shields.io/github/actions/workflow/status/descoped/service-provider-api/ci.yml?branch=master)
 ![Latest Tag](https://img.shields.io/github/v/tag/descoped/service-provider-api)
-[![Maven Central](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fdescoped%2Fspi%2Fservice-provider-api%2Fmaven-metadata.xml&label=maven%20central)](https://central.sonatype.com/artifact/io.descoped.spi/service-provider-api)
+[![Maven Central](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fdescoped%2Fspi%2Fservice-provider-api%2Fmaven-metadata.xml&query=%2F%2Frelease&label=maven%20central&color=blue)](https://central.sonatype.com/artifact/io.descoped.spi/service-provider-api)
 ![Renovate](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=descoped_service-provider-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=descoped_service-provider-api)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=descoped_service-provider-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=descoped_service-provider-api)
