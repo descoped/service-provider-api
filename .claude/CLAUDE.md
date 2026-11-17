@@ -30,7 +30,6 @@ when behaviour changes.
   "Publish SNAPSHOT") with the repository secrets `CENTRAL_TOKEN_USER` / `CENTRAL_TOKEN_PASSWORD`; the step fails when
   they are missing. Releases go through the Central Portal (profiles `central,sign`), only with the owner's approval.
   CI never publishes a release.
-- **No AI attribution** in commit messages or pull requests.
 
 ## Testing
 
