@@ -56,7 +56,8 @@
     </scm>
 
     <!-- Snapshots go to the Central Portal snapshot repository; releases go through the Central Portal by
-         central-publishing-maven-plugin (profile `central`). Server id `central` holds the Portal user token. -->
+         central-publishing-maven-plugin (profile `central`). Server id `central` holds the Portal user token and,
+         for Maven 3.10, lists https://central.sonatype.com in repositoryOrigins (see .github/maven-settings.xml). -->
     <distributionManagement>
         <snapshotRepository>
             <id>central</id>
@@ -88,6 +89,7 @@
     <profiles>
         <!-- Publishing to Maven Central through the Central Portal.
              Snapshot (no signing needed): ./mvnw deploy -P central,secrets
+             (server `central` in ~/.m2/settings.xml with https://central.sonatype.com in repositoryOrigins)
              Release (Ove approves each one): ./mvnw release:prepare release:perform -P secrets
              Releases are uploaded with autoPublish=false and published by hand in the Portal. -->
         <profile>
