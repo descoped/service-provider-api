@@ -26,12 +26,11 @@ when behaviour changes.
 - **No runtime dependencies** and no logging. Adding a dependency is the owner's decision.
 - **Always the latest stable version** of every library, plugin and action. Pre-releases only on request. Old and
   outdated code and configuration is removed, not carried along.
-- **Publishing.** Merges to `master` publish a SNAPSHOT to the Central Portal snapshot repository (`ci.yml`, step
-  "Publish SNAPSHOT") with the repository secrets `CENTRAL_TOKEN_USER` / `CENTRAL_TOKEN_PASSWORD`; the step fails when
-  they are missing. Releases go through the Central Portal (profiles `central,sign`), only with the owner's approval.
-  CI never publishes a release. Maven 3.10 sends a server's credentials only to the hosts it knows for that id, and
-  the id `central` is bound to Maven Central, so the server `central` must list `https://central.sonatype.com` in
-  `repositoryOrigins`: in `.github/maven-settings.xml` for CI, and in `~/.m2/settings.xml` for deploys by hand.
+- **Publishing.** No workflow publishes to Maven Central or the Central Portal, not even SNAPSHOTs: the Portal limits
+  the namespace to 7 publications a month. Releases go through the Central Portal by hand (profiles `central,sign`),
+  only with the owner's approval; SNAPSHOTs are deployed by hand only when needed. Maven 3.10 sends a server's
+  credentials only to the hosts it knows for that id, and the id `central` is bound to Maven Central, so the server
+  `central` in `~/.m2/settings.xml` must list `https://central.sonatype.com` in `repositoryOrigins`.
 
 ## Testing
 

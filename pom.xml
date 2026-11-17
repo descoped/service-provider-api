@@ -57,7 +57,7 @@
 
     <!-- Snapshots go to the Central Portal snapshot repository; releases go through the Central Portal by
          central-publishing-maven-plugin (profile `central`). Server id `central` holds the Portal user token and,
-         for Maven 3.10, lists https://central.sonatype.com in repositoryOrigins (see .github/maven-settings.xml). -->
+         for Maven 3.10, lists https://central.sonatype.com in repositoryOrigins. Nothing is published from CI. -->
     <distributionManagement>
         <snapshotRepository>
             <id>central</id>
