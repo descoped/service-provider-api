@@ -4,7 +4,7 @@
 
     <groupId>io.descoped.spi</groupId>
     <artifactId>service-provider-api</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
     <name>Service Provider API</name>
@@ -49,7 +49,7 @@
         <connection>scm:git:git://github.com/descoped/service-provider-api.git</connection>
         <developerConnection>scm:git:git@github.com:descoped/service-provider-api.git</developerConnection>
         <url>https://github.com/descoped/service-provider-api/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>3.0.0</tag>
     </scm>
 
     <!-- Snapshots go to the Central Portal snapshot repository; releases go through the Central Portal by
