@@ -4,14 +4,16 @@ import io.descoped.service.provider.api.ProviderName;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ProviderName("hello")
 public final class HelloInitializer implements GreeterInitializer {
 
-    static volatile int instances;
+    /** How many instances were created; atomic, because providers are created concurrently. */
+    static final AtomicInteger INSTANCES = new AtomicInteger();
 
     public HelloInitializer() {
-        instances++;
+        INSTANCES.incrementAndGet();
     }
 
     @Override

@@ -4,6 +4,7 @@ import io.descoped.service.provider.api.ProviderConfigurator;
 import io.descoped.service.provider.api.ProviderException;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,11 +38,11 @@ class ProviderConfiguratorTest {
 
     @Test
     void instantiatesOnlyTheChosenProvider() {
-        int hi = HiInitializer.instances;
-        int hello = HelloInitializer.instances;
+        int hi = HiInitializer.INSTANCES.get();
+        int hello = HelloInitializer.INSTANCES.get();
         ProviderConfigurator.configure(GreeterInitializer.class, "hello", HELLO);
-        assertEquals(hi, HiInitializer.instances);
-        assertEquals(hello + 1, HelloInitializer.instances);
+        assertEquals(hi, HiInitializer.INSTANCES.get());
+        assertEquals(hello + 1, HelloInitializer.INSTANCES.get());
     }
 
     @Test
@@ -121,14 +122,19 @@ class ProviderConfiguratorTest {
 
     @Test
     void isThreadSafe() throws Exception {
+        int hi = HiInitializer.INSTANCES.get();
+        int hello = HelloInitializer.INSTANCES.get();
         ExecutorService executor = Executors.newFixedThreadPool(8);
         try {
             Callable<String> task = () -> ProviderConfigurator.configure(GreeterInitializer.class, "hello", HELLO)
                     .greeting();
-            List<Future<String>> results = executor.invokeAll(java.util.Collections.nCopies(200, task));
+            List<Future<String>> results = executor.invokeAll(Collections.nCopies(200, task));
             for (Future<String> result : results) {
                 assertEquals("Hello World!", result.get());
             }
+            // One instance of the chosen provider per call, none of the other, even when calls run concurrently.
+            assertEquals(hello + 200, HelloInitializer.INSTANCES.get());
+            assertEquals(hi, HiInitializer.INSTANCES.get());
         } finally {
             executor.shutdown();
             assertTrue(executor.awaitTermination(10, TimeUnit.SECONDS));
