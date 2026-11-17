@@ -29,7 +29,9 @@ when behaviour changes.
 - **Publishing.** Merges to `master` publish a SNAPSHOT to the Central Portal snapshot repository (`ci.yml`, step
   "Publish SNAPSHOT") with the repository secrets `CENTRAL_TOKEN_USER` / `CENTRAL_TOKEN_PASSWORD`; the step fails when
   they are missing. Releases go through the Central Portal (profiles `central,sign`), only with the owner's approval.
-  CI never publishes a release.
+  CI never publishes a release. Maven 3.10 sends a server's credentials only to the hosts it knows for that id, and
+  the id `central` is bound to Maven Central, so the server `central` must list `https://central.sonatype.com` in
+  `repositoryOrigins`: in `.github/maven-settings.xml` for CI, and in `~/.m2/settings.xml` for deploys by hand.
 
 ## Testing
 
