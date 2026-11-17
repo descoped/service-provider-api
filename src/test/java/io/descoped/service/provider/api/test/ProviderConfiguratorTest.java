@@ -3,6 +3,8 @@ package io.descoped.service.provider.api.test;
 import io.descoped.service.provider.api.ProviderConfigurator;
 import io.descoped.service.provider.api.ProviderException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,6 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Several tests compare the providers' instance counters before and after a call, so another test creating providers
+ * in between would break them. The tests therefore run one at a time, even if parallel execution is turned on.
+ */
+@Execution(ExecutionMode.SAME_THREAD)
 class ProviderConfiguratorTest {
 
     private static final Map<String, String> HELLO = Map.of("name", "World", "punctuation", "!");
