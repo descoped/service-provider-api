@@ -53,9 +53,6 @@ jobs:
           java-version: '17'
           distribution: temurin
           cache: maven
-          server-id: central
-          server-username: CENTRAL_TOKEN_USER
-          server-password: CENTRAL_TOKEN_PASSWORD
 
       - name: Build, test and Javadoc
         if: github.event_name != 'push'
@@ -78,6 +75,7 @@ jobs:
 
       # Every change merged to master is published as a SNAPSHOT to the Central Portal snapshot repository
       # (https://central.sonatype.com/repository/maven-snapshots/). Releases are never published from CI.
+      # The token goes in through .github/maven-settings.xml, which binds it to central.sonatype.com (Maven 3.10).
       - name: Publish SNAPSHOT
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
@@ -104,4 +102,4 @@ jobs:
                   echo "::error::master is at $version, not a SNAPSHOT, and this is not a release commit"; exit 1 ;;
               esac ;;
           esac
-          ./mvnw --batch-mode --no-transfer-progress deploy -P central -DskipTests
+          ./mvnw --batch-mode --no-transfer-progress --settings .github/maven-settings.xml deploy -P central -DskipTests
