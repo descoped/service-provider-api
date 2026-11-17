@@ -139,7 +139,7 @@ permission to load it, not resolution of provider modules.
 
 ## Snapshots
 
-Merges to `master` are published as SNAPSHOTs to the Central Portal snapshot repository:
+SNAPSHOTs are not published on every merge. When one is published, it is in the Central Portal snapshot repository:
 
 ```xml
 <repositories>
@@ -157,7 +157,7 @@ Merges to `master` are published as SNAPSHOTs to the Central Portal snapshot rep
 Build with JDK 17 or newer. `./mvnw` (the Maven Wrapper) downloads the pinned Maven, 3.10.1, and checks its SHA-256;
 a Maven of your own works too if it is 3.6.3 or newer (not Maven 4 yet).
 
-Builds are reproducible from the next release on: the jars from a release tag are byte for byte the ones on Maven
+Builds are reproducible from 3.0.1 on: the jars from a release tag are byte for byte the ones on Maven
 Central. Build with the same major JDK as the release (`Build-Jdk-Spec` in the jar's manifest; if a hash differs, try
 the same patch version) from an LF checkout (`.gitattributes` enforces it):
 `git checkout <tag> && ./mvnw -P central package -DskipTests`, then compare the SHA-256 of `target/*.jar` (main, sources
