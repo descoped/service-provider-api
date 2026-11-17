@@ -35,10 +35,11 @@ when behaviour changes.
 ## Testing
 
 - Unit tests (JUnit 6) are a module of their own, `io.descoped.service.provider.api.test`
-  (`src/test/java/module-info.java`), in package `io.descoped.service.provider.api.test`. It requires the library and declares `uses` and `provides`
-  for its test services, as an application module does, so surefire and the IDE run the tests on the module path and
-  they reach only the exported API. It is `open` for JUnit only. Never put tests in the library's package (a split
-  package) or register test providers in `META-INF/services` (a named module ignores it).
+  (`src/test/java/module-info.java`), in package `io.descoped.service.provider.api.test`. It requires the library
+  and declares `uses` and `provides` for its test services, as an application module does, so surefire and the IDE
+  run the tests on the module path and they reach only the exported API. It is `open` for JUnit only. Never put tests
+  in the library's package (a split package) or register test providers in `META-INF/services` (a named module
+  ignores it).
 - `src/it/consumer/run.sh` covers the module path: `consumer.greeting` defines the service and declares `uses`;
   `consumer.greeting.hello` provides it (one provider through a static `provider()` method) and no module requires
   it; `greeting-auto.jar` is an automatic module with a provider in `META-INF/services`; `consumer` requires only
