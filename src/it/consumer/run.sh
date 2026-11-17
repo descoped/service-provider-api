@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# JPMS consumer smoke test, run after `mvn package`. Uses the built jar the way a modular application with drop-in
+# JPMS consumer smoke test, run after `./mvnw package`. Uses the built jar the way a modular application with drop-in
 # providers does:
 #
 # - consumer.greeting        the service; declares `uses`, as the module that owns a service should
