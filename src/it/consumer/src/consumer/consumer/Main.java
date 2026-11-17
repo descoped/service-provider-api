@@ -19,10 +19,11 @@ public final class Main {
     /**
      * Runs the checks.
      *
-     * @param args {@code module} or {@code classpath}
+     * @param args {@code module}, {@code automatic} or {@code classpath}
      */
     public static void main(String[] args) {
-        boolean modulePath = args.length > 0 && args[0].equals("module");
+        String mode = args.length > 0 ? args[0] : "?";
+        boolean modulePath = !mode.equals("classpath");
         Map<String, String> configuration = Map.of("greeter.name", "World", "other", "x");
 
         String hello = ProviderConfigurator.configure(GreeterInitializer.class, "hello",
@@ -47,7 +48,8 @@ public final class Main {
 
         Module module = ProviderConfigurator.class.getModule();
         check(modulePath == module.isNamed(), "module mode");
-        System.out.println("OK (" + (modulePath ? "module " + module.getName() : "class path") + ")");
+        String library = module.isNamed() ? "module " + module.getName() : "on the class path";
+        System.out.println("OK (" + mode + "): library " + library + ", application " + Main.class.getModule());
     }
 
     private static void check(boolean condition, String what) {

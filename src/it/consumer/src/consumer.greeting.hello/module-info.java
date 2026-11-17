@@ -1,4 +1,6 @@
-/** Two providers. No module requires this one: it is found by service binding, through the uses in consumer.greeting. */
+/**
+ * Two providers. No module requires this one: it is found by service binding, through the uses in consumer.greeting.
+ */
 module consumer.greeting.hello {
     requires consumer.greeting;
 

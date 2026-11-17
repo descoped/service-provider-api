@@ -32,8 +32,8 @@ public final class ProviderConfigurator {
      * Loads the providers of {@code service} with {@link ServiceLoader#load(Class)} (the thread context class loader,
      * and the named modules of the boot layer), selects the one named {@code providerName} and initializes it.
      *
-     * <p>This module declares its use of {@code service} at run time, with {@link Module#addUses(Class)}, so that it may
-     * load it. That does not resolve modules: on the module path, a provider module that no module {@code requires}
+     * <p>This module declares its use of {@code service} at run time, with {@link Module#addUses(Class)}, so that it
+     * may load it. That does not resolve modules: on the module path, a provider module that no module {@code requires}
      * is resolved at startup only if some module declares {@code uses} for the service, usually the module that
      * defines it (or with {@code --add-modules}). Providers are registered with {@code provides} in a named module,
      * and with {@code META-INF/services} in an automatic module or on the class path.
@@ -134,8 +134,10 @@ public final class ProviderConfigurator {
         Objects.requireNonNull(prefix, "prefix");
         Map<String, String> result = new LinkedHashMap<>();
         configuration.forEach((key, value) -> {
+            Objects.requireNonNull(key, "configuration key");
+            Objects.requireNonNull(value, key);
             if (key.startsWith(prefix) && key.length() > prefix.length()) {
-                result.put(key.substring(prefix.length()), Objects.requireNonNull(value, key));
+                result.put(key.substring(prefix.length()), value);
             }
         });
         return Collections.unmodifiableMap(result);

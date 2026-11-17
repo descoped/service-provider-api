@@ -5,6 +5,7 @@ public interface UnnamedInitializer extends ProviderInitializer<String> {
 
     final class Anonymous implements UnnamedInitializer {
         public Anonymous() {
+            // ServiceLoader needs a public no-argument constructor
         }
 
         @Override

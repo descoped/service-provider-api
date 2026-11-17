@@ -49,7 +49,8 @@ class ProviderConfiguratorTest {
         Greeter greeter = ProviderConfigurator.configure(GreeterInitializer.class, "hello", configuration);
         configuration.put("name", "changed");
         assertEquals(Map.of("name", "World", "punctuation", "!", "optional", "yes"), greeter.configuration());
-        assertThrows(UnsupportedOperationException.class, () -> greeter.configuration().put("x", "y"));
+        Map<String, String> passed = greeter.configuration();
+        assertThrows(UnsupportedOperationException.class, () -> passed.put("x", "y"));
     }
 
     @Test
@@ -61,8 +62,9 @@ class ProviderConfiguratorTest {
 
     @Test
     void rejectsMissingRequiredKeys() {
+        Map<String, String> configuration = Map.of("other", "x");
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-                () -> ProviderConfigurator.configure(GreeterInitializer.class, "hello", Map.of("other", "x")));
+                () -> ProviderConfigurator.configure(GreeterInitializer.class, "hello", configuration));
         assertTrue(e.getMessage().contains("[name, punctuation]") || e.getMessage().contains("[punctuation, name]"),
                 e.getMessage());
     }
@@ -155,5 +157,11 @@ class ProviderConfiguratorTest {
         Map<String, String> nullValue = new HashMap<>();
         nullValue.put("a.b", null);
         assertThrows(NullPointerException.class, () -> ProviderConfigurator.subset(nullValue, "a."));
+        Map<String, String> otherNullValue = new HashMap<>();
+        otherNullValue.put("other", null);
+        assertThrows(NullPointerException.class, () -> ProviderConfigurator.subset(otherNullValue, "a."));
+        Map<String, String> nullKey = new HashMap<>();
+        nullKey.put(null, "x");
+        assertThrows(NullPointerException.class, () -> ProviderConfigurator.subset(nullKey, "a."));
     }
 }

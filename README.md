@@ -104,8 +104,8 @@ The provider receives an unmodifiable copy of the configuration, with every requ
 | Your setup | What to do |
 |---|---|
 | The service module declares `uses` | Nothing. Provider modules and provider jars (automatic modules) on the module path are found without being required. |
-| No module declares `uses` | Only provider modules that some module `requires`, and automatic modules, are found. Add `uses` to the service module, or start with `--add-modules <provider module>`. |
-| Your application is an automatic module (no `module-info.java`) | Start with `--add-modules io.descoped.service.provider.api` (or `ALL-MODULE-PATH`): an automatic module does not resolve the named modules it uses. |
+| No module declares `uses` | Only provider modules (explicit or automatic) that some module `requires` are found. Add `uses` to the service module, or start with `--add-modules <provider module>`. |
+| Your application is an automatic module (no `module-info.java`) | Start with `--add-modules <service module>` (or `ALL-MODULE-PATH`). An automatic module resolves the other automatic modules, provider jars included, but no explicit module: neither the service module nor, through its `requires transitive`, this library. Once added, the service module's `uses` binds the explicit provider modules. |
 | Everything on the class path | Nothing. `META-INF/services` registers the providers. |
 
 `configure(Class, ...)` calls `Module.addUses`, so this library needs no `uses` of its own for your service; that is

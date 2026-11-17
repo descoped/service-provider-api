@@ -39,7 +39,8 @@ when behaviour changes.
 - `src/it/consumer/run.sh` covers the module path: `consumer.greeting` defines the service and declares `uses`;
   `consumer.greeting.hello` provides it (one provider through a static `provider()` method) and no module requires
   it; `greeting-auto.jar` is an automatic module with a provider in `META-INF/services`; `consumer` requires only
-  `consumer.greeting` and has no `uses`. It then runs the same code on the class path.
+  `consumer.greeting` and has no `uses`. It runs again with the application as an automatic module (started with
+  `--add-modules consumer.greeting`), then on the class path.
 
 ## Commands
 

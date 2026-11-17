@@ -7,8 +7,9 @@
 # - greeting-auto.jar        a provider in a jar without module-info (an automatic module), from META-INF/services
 # - consumer                 the application; requires only consumer.greeting, no `uses`
 #
-# Runs on the module path, where service binding resolves both provider modules, then on the class path, where
-# META-INF/services registers the providers instead.
+# Runs on the module path, where service binding resolves both provider modules; then with the application as an
+# automatic module (a jar without module-info), started with --add-modules for the service module; then on the class
+# path, where META-INF/services registers the providers instead.
 set -euo pipefail
 
 root=$(cd "$(dirname "$0")/../../.." && pwd)
@@ -42,6 +43,12 @@ jar --describe-module --file "$auto"
 
 echo "== module path"
 java --module-path "$jar:$out/classes:$auto" --module consumer/consumer.Main module
+
+echo "== module path, the application as an automatic module"
+app="$out/consumer-app.jar"
+jar --create --file "$app" -C "$out/classes/consumer" consumer
+java --module-path "$jar:$out/classes/consumer.greeting:$out/classes/consumer.greeting.hello:$auto:$app" \
+    --add-modules consumer.greeting --module consumer.app/consumer.Main automatic
 
 echo "== class path"
 java --class-path "$jar:$out/classes/consumer.greeting:$out/classes/consumer.greeting.hello:$out/classes/consumer:$auto" \

@@ -10,9 +10,9 @@ import java.util.Set;
  * {@code provides} in {@code module-info.java} for the module path and a {@code META-INF/services} file for the class
  * path or an automatic module. Annotate each implementation with {@link ProviderName}. The module that defines the
  * service interface declares {@code uses} for it, so that provider modules no other module requires are resolved
- * when the application starts. A provider needs a public no-argument constructor; in a
- * module with {@code provides} it may have a public static {@code provider()} method instead, as {@link java.util.ServiceLoader}
- * describes. The annotation then still goes on the class named in {@code provides}.
+ * when the application starts. A provider needs a public no-argument constructor; in a module with
+ * {@code provides} it may have a public static {@code provider()} method instead, as
+ * {@link java.util.ServiceLoader} describes. The annotation then still goes on the class named in {@code provides}.
  *
  * <pre>{@code
  * public interface StorageInitializer extends ProviderInitializer<Storage> {
