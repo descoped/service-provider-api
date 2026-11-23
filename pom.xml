@@ -96,8 +96,9 @@
              publishes them to maven.descoped.io and names that target on its command line.
              The `secrets` profile is not in this pom: it lives in the owner's ~/.m2/settings.xml and loads the
              Portal token (server `central`, with https://central.sonatype.com in repositoryOrigins for Maven 3.10).
-             Release (Ove approves each one): ./mvnw release:prepare release:perform -P secrets
-             Releases are uploaded with autoPublish=false and published by hand in the Portal. -->
+             Release (Ove approves each one): ./mvnw release:prepare release:perform -P secrets, tag v<version>.
+             Releases are uploaded with autoPublish=false and published by hand in the Portal.
+             The steps: docs/releasing.md. -->
         <profile>
             <id>central</id>
             <build>
@@ -315,7 +316,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.3.1</version>
                 <configuration>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
                     <releaseProfiles>central,sign</releaseProfiles>
                     <goals>deploy</goals>
                 </configuration>

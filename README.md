@@ -137,7 +137,10 @@ permission to load it, not resolution of provider modules.
 | The module `opens` its package | No `opens` |
 | Not available | `configure(ServiceLoader, ...)` |
 
-## Snapshots
+## Releases and SNAPSHOTs
+
+Releases are on Maven Central only, tagged `v<version>` from 3.0.2 on; how they are made is in
+[releasing](docs/releasing.md).
 
 SNAPSHOTs of the next version are at `https://maven.descoped.io/` (SNAPSHOTs only): `X.Y.Z-SNAPSHOT` from `master`,
 and `X.Y.Z-<branch>-SNAPSHOT` from a branch built on request. Releases are only on Maven Central.
