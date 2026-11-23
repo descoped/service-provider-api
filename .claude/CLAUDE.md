@@ -26,11 +26,13 @@ when behaviour changes.
 - **No runtime dependencies** and no logging. Adding a dependency is the owner's decision.
 - **Always the latest stable version** of every library, plugin and action. Pre-releases only on request. Old and
   outdated code and configuration is removed, not carried along.
-- **Publishing.** No workflow publishes to Maven Central or the Central Portal, not even SNAPSHOTs: the Portal limits
-  the namespace to 7 publications a month. Releases go through the Central Portal by hand (profiles `central,sign`),
-  only with the owner's approval; SNAPSHOTs are deployed by hand only when needed. Maven 3.10 sends a server's
-  credentials only to the hosts it knows for that id, and the id `central` is bound to Maven Central, so the server
-  `central` in `~/.m2/settings.xml` must list `https://central.sonatype.com` in `repositoryOrigins`.
+- **Publishing.** Releases go only to Maven Central, through the Central Portal (profiles `central,sign`), from the
+  owner's machine and only with the owner's approval; CI never releases. After a release is on Maven Central, update
+  the version in the README's Usage section. SNAPSHOTs go only to maven.descoped.io (Descoped's AWS CodeArtifact),
+  from CI's `snapshot` job: on a push to master, or by `workflow_dispatch` on a branch as `X.Y.Z-<branch>-SNAPSHOT`.
+  The job names the target on its command line (`-DaltSnapshotDeploymentRepository`), and the POM has no
+  `distributionManagement` at all: that is what makes a release version fail to deploy there. Never add one. No AWS
+  account ID or CodeArtifact endpoint in any public file (POM, workflow, deployed POM, CI log).
 
 ## Testing
 
@@ -60,6 +62,4 @@ when behaviour changes.
 ./mvnw verify javadoc:javadoc    # plus Javadoc with doclint, warnings fail the build
 src/it/consumer/run.sh           # after package: named modules use the jar, module path and class path
 ./mvnw verify -P coverage        # JaCoCo report in target/site/jacoco
-./mvnw deploy -P central,secrets # SNAPSHOT to the Central Portal by hand (the token comes from ~/.mavenrc;
-                                 # ~/.m2/settings.xml lists https://central.sonatype.com in repositoryOrigins)
 ```
