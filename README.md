@@ -20,7 +20,7 @@ registered the standard way: `provides` in `module-info.java`, or a `META-INF/se
 <dependency>
     <groupId>io.descoped.spi</groupId>
     <artifactId>service-provider-api</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 </dependency>
 ```
 
@@ -139,17 +139,16 @@ permission to load it, not resolution of provider modules.
 
 ## Snapshots
 
-SNAPSHOTs are not published on every merge. When one is published, it is in the Central Portal snapshot repository:
+SNAPSHOTs of the next version are at `https://maven.descoped.io/` (SNAPSHOTs only): `X.Y.Z-SNAPSHOT` from `master`,
+and `X.Y.Z-<branch>-SNAPSHOT` from a branch built on request. Releases are only on Maven Central.
 
 ```xml
-<repositories>
-    <repository>
-        <id>central-portal-snapshots</id>
-        <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-        <releases><enabled>false</enabled></releases>
-        <snapshots><enabled>true</enabled></snapshots>
-    </repository>
-</repositories>
+<repository>
+    <id>descoped-snapshots-public</id>
+    <url>https://maven.descoped.io/</url>
+    <releases><enabled>false</enabled></releases>
+    <snapshots><enabled>true</enabled></snapshots>
+</repository>
 ```
 
 ## Building
