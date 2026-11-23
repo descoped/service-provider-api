@@ -63,8 +63,8 @@ Prepare and perform can run in one command, in batch mode with the versions give
 -DdevelopmentVersion=3.0.3-SNAPSHOT`.
 
 Any JDK 17 or newer builds the release; the class files are Java 17 either way. The JDK's major version goes into
-`Build-Jdk-Spec` in the jars' manifests, and reproducing the jars needs the same major JDK, so the GitHub release
-names it.
+`Build-Jdk-Spec` in the jars' manifests, and reproducing the jars needs the same JDK (the same patch version if a hash
+differs), so note `java -version` before the release: the GitHub release names it in full.
 
 ### 3. Publish on Central
 
@@ -81,13 +81,19 @@ gh release create v3.0.2 --verify-tag --title 3.0.2 --generate-notes --notes-sta
 ```
 
 `--notes-start-tag` names the previous release's tag; from the second `v` release on, `--generate-notes` finds it by
-itself. Add to the notes what changed for users and the JDK the release was built on (`Build-Jdk-Spec`).
+itself. Add to the notes what changed for users and the JDK the release was built on, with its full version (from
+`java -version`, for example `27.0.1`).
 
 Then update the version in the README's Usage section, in a pull request.
 
 ## If something goes wrong
 
 - **`release:prepare` fails before it pushes**: `./mvnw release:rollback`, fix, and prepare again.
+- **`release:prepare` fails after it pushed the tag**: don't roll back. If nothing was uploaded to the Portal yet, fix
+  forward: run `release:perform -P secrets` on the tag (`-Dtag=v<version>`), or, if the tag itself is wrong, delete
+  it on GitHub and locally (`git push --delete origin v<version>`, `git tag -d v<version>`), revert the two release
+  commits in a pull request and prepare again. Once a deployment for the version is published, the version is
+  final: fix in the next one.
 - **`release:perform` fails, or the Portal rejects the deployment**: drop the deployment in the Portal, if there is one,
   fix, and run `release:perform -P secrets` again. `release.properties` still points at the tag, so it builds the same
   tag; without it, name the tag: `-Dtag=v<version>`. The tag was tested by `release:prepare`, so a rerun can skip the
