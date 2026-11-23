@@ -27,8 +27,9 @@ when behaviour changes.
 - **Always the latest stable version** of every library, plugin and action. Pre-releases only on request. Old and
   outdated code and configuration is removed, not carried along.
 - **Publishing.** Releases go only to Maven Central, through the Central Portal (profiles `central,sign`), from the
-  owner's machine and only with the owner's approval; CI never releases. After a release is on Maven Central, update
-  the version in the README's Usage section. SNAPSHOTs go only to maven.descoped.io (Descoped's AWS CodeArtifact),
+  owner's machine and only with the owner's approval; CI never releases. The tag is `v<version>` (from 3.0.2; earlier
+  tags keep their names). After a release is on Maven Central, update the version in the README's Usage section. How
+  it is done: [releasing](../docs/releasing.md). SNAPSHOTs go only to maven.descoped.io (Descoped's AWS CodeArtifact),
   from CI's `snapshot` job: on a push to master, or by `workflow_dispatch` on a branch as `X.Y.Z-<branch>-SNAPSHOT`.
   The job names the target on its command line (`-DaltSnapshotDeploymentRepository`), and the POM has no
   `distributionManagement` at all: that is what makes a release version fail to deploy there. Never add one. No AWS
